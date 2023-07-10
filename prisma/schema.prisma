@@ -11,23 +11,25 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  name     String
-  bio      String
-  password String
-  posts    Post[]
-  like     Like[]
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  bio       String
+  password  String
+  createdAt DateTime @default(now())
+  posts     Post[]
+  like      Like[]
 
   @@map("users")
 }
 
 model Post {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String
-  comments    Comment @relation(fields: [commentId], references: [id])
-  user        User    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  comments    Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes       Like[]
   userId      Int
   commentId   Int
@@ -36,9 +38,9 @@ model Post {
 }
 
 model Comment {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   description String
-  createdAt   String
+  createdAt   DateTime @default(now())
   posts       Post[]
 
   @@map("comments")

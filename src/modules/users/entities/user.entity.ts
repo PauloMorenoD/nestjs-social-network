@@ -1,7 +1,10 @@
+import { Exclude } from "class-transformer"
+
 export class User {
-    readonly id : string
+    readonly id : number
     name : string
     email : string
     createdAt : Date
+    @Exclude()
     password : string
 }

@@ -1,25 +1,25 @@
-import { hashSync } from "bcrypt"
+import { hashSync } from "bcryptjs"
 import { Transform } from "class-transformer"
 import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
 export class CreateUserDto {
     @IsString()
     @IsNotEmpty()
-    name : string
-    
+    name: string
+
     @IsEmail()
     @IsNotEmpty()
-    email : string
-    
+    email: string
+
     @IsString()
     @IsNotEmpty()
-    @Transform(({value} : {value:string}) => hashSync(value, 10),{
-        groups:['transform']
+    bio: string
+
+    @IsString()
+    @IsNotEmpty()
+    @Transform(({ value }: { value: string }) => hashSync(value, 10),{
+        groups: ['transform']
     })
-    password : string
-    
-    @IsString()
-    @IsNotEmpty()
-    bio : string
+    password: string
 
 }
