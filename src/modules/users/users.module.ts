@@ -14,6 +14,7 @@ import { UserRepository } from './repositories/users.repository';
       provide: UserRepository,
       useClass: UserPrismaRepository
     },
-  ]
+  ],
+  exports:[UsersService]
 })
 export class UsersModule { }
