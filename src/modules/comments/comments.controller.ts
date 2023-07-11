@@ -1,4 +1,4 @@
-import { Controller, Request, Post, Body, Patch, Param, Delete, UseGuards, NotFoundException } from '@nestjs/common';
+import { Controller, Request, Post, Body, Patch, Param, Delete, UseGuards, NotFoundException, Get } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -22,7 +22,7 @@ export class CommentsController {
     const comment = this.commentsService.findComment(id)
 
     if (!comment) throw new NotFoundException(`Comment not found!`);
-    
+
     return this.commentsService.update(+id, updateCommentDto);
   }
 
@@ -30,11 +30,18 @@ export class CommentsController {
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: number) {
-    
+
     const comment = this.commentsService.findComment(id)
 
     if (!comment) throw new NotFoundException(`Comment not found!`);
 
     return this.commentsService.remove(+id);
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  findAllFromPost(@Param('id') id: number) {
+
+    return this.commentsService.findPostComment(id)
   }
 }

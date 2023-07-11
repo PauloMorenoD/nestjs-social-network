@@ -47,7 +47,7 @@ export class CommentsPrismaRepository implements CommentsRepository {
     
     async findPostComment(id: number): Promise<any[]> {
         return await this.prisma.comment.findMany({
-            where: { id },
+            where: { postId:id },
             select: {
                 id: true,
                 description: true,

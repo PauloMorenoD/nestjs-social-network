@@ -9,7 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { LikesModule } from './modules/likes/likes.module';
 
 @Module({
-  imports: [UsersModule, CommentsModule, PublishmentsModule, AuthModule, LikesModule],
+  imports: [UsersModule, CommentsModule, PublishmentsModule, AuthModule, LikesModule, ],
   controllers: [AppController],
   providers: [AppService],
 })

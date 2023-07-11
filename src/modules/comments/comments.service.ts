@@ -20,4 +20,7 @@ export class CommentsService {
   async findComment(id: number) {
     return await this.commentsRepository.findComment(id)
   }
+  async findPostComment(id: number) {
+    return await this.commentsRepository.findPostComment(id)
+  }
 }
