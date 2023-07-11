@@ -18,6 +18,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   posts     Post[]
+  comments     Comment[]
   like      Like[]
 
   @@map("users")
@@ -28,11 +29,10 @@ model Post {
   name        String
   description String
   createdAt   DateTime @default(now())
-  comments    Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  likes       Like[]
-  userId      Int
-  commentId   Int
+  comments  Comment[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     Like[]
+  userId    Int
 
   @@map("posts")
 }
@@ -41,7 +41,10 @@ model Comment {
   id          Int      @id @default(autoincrement())
   description String
   createdAt   DateTime @default(now())
-  posts       Post[]
+  post    Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  postId Int
 
   @@map("comments")
 }
