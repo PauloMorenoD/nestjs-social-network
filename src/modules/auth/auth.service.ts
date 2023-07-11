@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -21,11 +22,14 @@ export class AuthService {
         const user = await this.userService.findByEmail(email)
 
         return {
-            token : this.jwtService.sign({
-                email
-            },{
+            token : this.jwtService.sign(
+            {
+                email,
+            },
+            {
                 subject : String(user.id)
-            }),
+            }
+            ),
             userId:user.id
         }
     }

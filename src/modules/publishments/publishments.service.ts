@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePublishmentDto } from './dto/create-publishment.dto';
 import { UpdatePublishmentDto } from './dto/update-publishment.dto';
+import { PostsRepository } from './repositories/posts.repository';
 
 @Injectable()
 export class PublishmentsService {
-  create(createPublishmentDto: CreatePublishmentDto) {
-    return 'This action adds a new publishment';
+  constructor(private PostsRepository: PostsRepository){}
+
+ async create(createPublishmentDto: CreatePublishmentDto, userId: number) {
+    return await this.PostsRepository.create(createPublishmentDto, userId);
   }
 
-  findAll() {
-    return `This action returns all publishments`;
+  async findAll() {
+    return await this.PostsRepository.findAll()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} publishment`;
+  async findOne(id: number) {
+    const post = await this.PostsRepository.findPost(id)
+
+    if(!post) throw new NotFoundException("post not found!")
+    
+    return post
   }
 
-  update(id: number, updatePublishmentDto: UpdatePublishmentDto) {
-    return `This action updates a #${id} publishment`;
+  async update(id: number, updatePublishmentDto: UpdatePublishmentDto) {
+
+    const post = this.PostsRepository.findPost(id)
+
+    if(!post) throw new NotFoundException("post not found!")
+
+    return await this.PostsRepository.update(id, updatePublishmentDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} publishment`;
+  async remove(id: number) {
+
+    const post = await this.PostsRepository.findPost(id)
+
+    if(!post) throw new NotFoundException("post not found!")
+
+    await this.PostsRepository.delete(id)
   }
 }

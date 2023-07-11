@@ -7,7 +7,6 @@ import { PrismaService } from "src/database/prisma.service";
 import { plainToInstance } from "class-transformer";
 
 @Injectable()
-
 export class UserPrismaRepository implements UserRepository {
 
     constructor(private prisma: PrismaService) { }
