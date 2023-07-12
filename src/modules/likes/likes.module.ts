@@ -9,10 +9,6 @@ import { PrismaService } from 'src/database/prisma.service';
   providers: [
     LikesService, 
     PrismaService,
-/*     {
-      provide: LikesRepository,
-      useClass:LikesPrismaRepository
-    } */
   ]
 })
 export class LikesModule {}
