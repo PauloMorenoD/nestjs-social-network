@@ -19,7 +19,8 @@ model User {
   createdAt DateTime @default(now())
   posts     Post[]
   comments     Comment[]
-  like      Like[]
+  likes      Like[]
+  followers     Follower[]
 
   @@map("users")
 }
@@ -57,4 +58,13 @@ model Like {
   postId Int
 
   @@map("likes")
+}
+
+model Follower {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  followerId Int
+
+  @@map("followers")
 }
